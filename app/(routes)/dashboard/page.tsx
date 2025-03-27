@@ -1,8 +1,10 @@
-import { fetchFormStats } from "@/actions/form.action";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
-import StatsCard from "./_components/StatsCard";
+import { fetchAllForms, fetchFormStats } from "@/actions/form.action";
 import { Separator } from "@/components/ui/separator";
+import StatsCard from "./_components/StatsCard";
+import CreateForm from "./_components/CreateForm";
+import { Suspense } from "react";
+import { Loader } from "lucide-react";
+import FormItem from "./_components/_common/FormItem";
 
 function Page() {
   return (
@@ -12,10 +14,7 @@ function Page() {
           <div className="flex items-center justify-between py-5 w-full">
             <h1 className="text-3xl font-semibold tracking-tight">Dashboard</h1>
 
-            <Button className="!bg-primary !font-medium gap-1">
-              <PlusIcon />
-              Create New Form
-            </Button>
+            <CreateForm />
           </div>
 
           <StatsListWrap />
@@ -30,8 +29,14 @@ function Page() {
             <h5 className="text-xl font-semibold tracking-tight">All Forms</h5>
           </div>
 
-          <div className="flex items-center justify-center">
-            No Forms Created
+          <div className="grid gap-4 grid-cols-2 md:grid-cols-5 lg:grid-cols-3 xl:grid-cols-5">
+            <Suspense
+              fallback={[1, 2, 3, 4].map((item) => (
+                <Loader key={item} className="animate-spin" size="3rem" />
+              ))}
+            >
+              <FormList />
+            </Suspense>
           </div>
         </section>
       </div>
@@ -43,6 +48,25 @@ async function StatsListWrap() {
   const stats = await fetchFormStats();
 
   return <StatsCard loading={false} data={stats} />;
+}
+
+async function FormList() {
+  const { forms } = await fetchAllForms();
+
+  if (!forms?.length)
+    return (
+      <div className="flex items-center w-full justify-center">
+        <span className="text-zinc-700">No Forms Created</span>
+      </div>
+    );
+
+  return (
+    <>
+      {forms?.map((form) => (
+        <FormItem key={form.id} form={form} />
+      ))}
+    </>
+  );
 }
 
 export default Page;
