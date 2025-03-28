@@ -1,19 +1,7 @@
 "use client";
 
+import { createForm } from "@/actions/form.action";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { Loader, PlusIcon } from "lucide-react";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -23,9 +11,21 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
-import { createForm } from "@/actions/form.action";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader, PlusIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 function CreateForm() {
   const router = useRouter();
@@ -65,16 +65,16 @@ function CreateForm() {
   }
 
   return (
-    <>
+    <div>
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
-          <Button className="!bg-primary !font-medium gap-1">
+          <Button className="!bg-primary !font-medium gap-1 cursor-pointer hover:ring translate-all duration-350">
             <PlusIcon />
             Create New Form
           </Button>
         </SheetTrigger>
 
-        <SheetContent side="bottom">
+        <SheetContent side="bottom" className="bg-white">
           <div className="w-full max-w-5xl mx-auto">
             <SheetHeader>
               <SheetTitle>Create New Form</SheetTitle>
@@ -84,7 +84,7 @@ function CreateForm() {
               </SheetDescription>
             </SheetHeader>
 
-            <div className="w-full" role="dialog">
+            <div className="w-full dialog-content">
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -144,7 +144,7 @@ function CreateForm() {
           </div>
         </SheetContent>
       </Sheet>
-    </>
+    </div>
   );
 }
 

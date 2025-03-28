@@ -36,7 +36,7 @@ function FormItem({ form }: { form: Form }) {
 
   return (
     <div onClick={onClick} role="button" className="w-full h-auto">
-      <div className="w-full relative flex items-center justify-center overflow-hidden h-[150px] rounded-t-xl border border-gray-300 bg-gradient-to-b from-primary/10 to-primary/10">
+      <div className="w-full relative flex items-center justify-center overflow-hidden h-[150px] rounded-t-xl border border-gray-300 bg-gradient-to-b from-primary/10 to-primary/10 cursor-pointer">
         <div className="w-36 absolute bottom-0 flex items-center flex-col pt-6 h-32 rounded-t-xl bg-white shadow-lg">
           <h5 className="text-sm font-medium mb-1 text-center text-gray-400 truncate block w-[200px]">
             {name}
@@ -44,8 +44,8 @@ function FormItem({ form }: { form: Form }) {
 
           {[0, 1, 2].map((item) => (
             <div key={item} className="flex items-center gap-1 mb-2">
-              <Skeleton className="size-3 rounded-full shrink-0" />
-              <Skeleton className="h-[11px] w-[75px]" />
+              <Skeleton className="size-3 bg-gray-200 rounded-full shrink-0" />
+              <Skeleton className="h-[11px] bg-gray-200 w-[75px]" />
             </div>
           ))}
         </div>
@@ -53,7 +53,7 @@ function FormItem({ form }: { form: Form }) {
 
       <div className="w-full py-0">
         <div className="flex w-full items-center justify-between py-1">
-          <span className="text-sm flex items-center font-medium gap-1">
+          <span className="text-sm flex items-center font-medium gap-1 cursor-pointer">
             {published ? (
               <Globe className="text-muted-foreground size-3" />
             ) : (
